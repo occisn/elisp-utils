@@ -1,4 +1,4 @@
-# cl-utils
+# elisp-utils
 
 Personal utilities for Emacs Lisp.
 
