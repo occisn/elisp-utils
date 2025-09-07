@@ -2,6 +2,10 @@
 
 Personal utilities for Emacs Lisp.
 
-todo
+Tests can be performed with `(ert '(tag elisp-utils))`
+
+File **numbers.el**  
+   - function `my/number-to-string-with-comma-as-thousand-separator`
+
 
 (end of README)
