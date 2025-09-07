@@ -1,3 +1,4 @@
+;;; -*- lexical-binding: t; -*-
 
 ;;; to test:
 ;;; (ert '(tag elisp-utils))

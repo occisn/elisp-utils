@@ -7,5 +7,7 @@ Tests can be performed with `(ert '(tag elisp-utils))`
 File **numbers.el**  
    - function `my/number-to-string-with-comma-as-thousand-separator`
 
+File **files.el**  
+   - function `my/insert-directories-in-file-list`
 
 (end of README)
