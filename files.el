@@ -1,9 +1,6 @@
 ;;; -*- lexical-binding: t; -*-
 
-;;; to test:
-;;; (ert '(tag elisp-utils))
-
-;;; === my/insert-directories-in-file-list
+;;; === to test: (ert '(tag elisp-utils))
 
 (defun my/insert-directories-in-file-list (files)
   "Take a list of files, and return the same list with directories intertwined.

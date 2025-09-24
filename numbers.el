@@ -1,9 +1,6 @@
 ;;; -*- lexical-binding: t; -*-
 
-;;; to test:
-;;; (ert '(tag elisp-utils))
-
-;;; === my/number-to-string-with-comma-as-thousand-separator
+;;; === to test: (ert '(tag elisp-utils))
 
 (defun my/number-to-string-with-comma-as-thousand-separator (num)
   "Return a string corresponding to number NUM formatted with thousand separators (commas).
