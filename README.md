@@ -17,4 +17,7 @@ File **numbers.el**
 File **files.el**  
    - function `my/insert-directories-in-file-list`
 
+FILE **windows.el**  
+   - function `add-to-environment-variable`
+   
 (end of README)
