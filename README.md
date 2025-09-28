@@ -4,6 +4,21 @@ Personal utilities for Emacs Lisp.
 
 Tests can be performed with `(ert '(tag elisp-utils))`
 
+File **dates.el**  
+   - function `my/lisp-timestamp-to-YYYY-MM-DD`  
+   - function `my/YYYY-MM-DD-to-lisp-timestamp`  
+   - function `my/today-YYYY-MM-DD`  
+   - function `my/today-YYYY`  
+   - function `my/today-MM`  
+   - function `my/today-DD`  
+   - function `my/day-in-week-in-French`  
+   - function `my/date-to-day-in-week-in-French`  
+   - function `my/today-day-in-week-in-French`  
+   - function `my/day-number-in-French`  
+   - function `my/month-in-French`  
+   - function `my/english-month-to-number`  
+   - function `my/today-in-French`
+
 File **macros.el**  
    - macro `aprogn`  
    - macro `amapcar`  
