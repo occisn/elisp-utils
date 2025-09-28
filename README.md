@@ -16,8 +16,13 @@ File **numbers.el**
 
 File **files.el**  
    - function `my/insert-directories-in-file-list`
+   
+File **strings.el**  
+   - function `my/string-remove-surrounding-quotes`  
+   - function `my/string-suffix-p`  
+   - function `my/split-string-at-first-delimiter`
 
-FILE **windows.el**  
+File **windows.el**  
    - function `add-to-environment-variable`
    
 (end of README)

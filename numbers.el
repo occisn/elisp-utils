@@ -11,7 +11,7 @@ v1 as of 2025-09-07"
       (setq str (replace-match "\\1,\\2" nil nil str)))
     str))
 
-(ert-deftest my/number-to-string-with-comma-as-thousand-separator ()
+(ert-deftest test-number-to-string-with-comma-as-thousand-separator ()
    :tags '(elisp-utils)
    (should (string= "123,456" (my/number-to-string-with-comma-as-thousand-separator 123456))))
 
