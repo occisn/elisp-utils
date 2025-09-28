@@ -27,7 +27,8 @@ File **macros.el**
    - macro `aif`
    
 File **numbers.el**  
-   - function `my/number-to-string-with-comma-as-thousand-separator`
+   - function `my/number-to-string-with-comma-as-thousand-separator`  
+   - function `my/add-number-grouping`
 
 File **files.el**  
    - function `my/insert-directories-in-file-list`
