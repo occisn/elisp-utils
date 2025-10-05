@@ -37,7 +37,7 @@ d1/ d1/a.org d1/b.org d2/ d2/c.org d3/ d3/d.org
      1000000)))
 
 (defun my/nb-of-elements-in-directory (folder)
-   "Return number of elements in FOLDER, including sub-folders.
+   "Return number of elements in FOLDER, including sub-folders (no recursive investigation of subdirectories).
 (v1, available in occisn/elisp-utils GitHub repository)"
    (- (length (directory-files folder)) 2))
 
