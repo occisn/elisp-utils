@@ -137,13 +137,72 @@
   (should (= 1 (my/english-month-to-number "Jan")))
   (should (= 12 (my/english-month-to-number "Dec"))))
 
-(defun my/today-in-French ()
-  "'25 août 2023' or similar
-(v1, available in occisn/elisp-utils GitHub repository)"
-  (concat (my/day-number-in-French (my/today-DD))
-          " "
-          (my/month-in-French (my/today-MM))
-          " "
-          (my/today-YYYY)))
+(cl-defun my/today-in-French (&optional with-day-in-week-p)
+   "Return '25 août 2023' or similar.
+If WITH-DAY-IN-WEEK-P, return 'mardi 25 août 2023' or similar.
+(v2, available in occisn/elisp-utils GitHub repository)"
+   (let* ((today-DD (format-time-string "%d"))   ; 01, 02
+          (day-number-in-French
+           (cond
+            ((string= today-DD  "01") "1er")
+            ((string= today-DD  "02") "2")
+            ((string= today-DD  "03") "3")
+            ((string= today-DD  "04") "4")
+            ((string= today-DD  "05") "5")
+            ((string= today-DD  "06") "6")
+            ((string= today-DD  "07") "7")
+            ((string= today-DD  "08") "8")
+            ((string= today-DD  "09") "9")
+            (t today-DD)))
+          (today-MM (format-time-string "%m"))   ; 01, 02
+          (month-in-French
+           (cond
+            ((string= today-MM  "01") "janvier")
+            ((string= today-MM  "02") "février")
+            ((string= today-MM  "03") "mars")
+            ((string= today-MM  "04") "avril")
+            ((string= today-MM  "05") "mai")
+            ((string= today-MM  "06") "juin")
+            ((string= today-MM  "07") "juillet")
+            ((string= today-MM  "08") "août")
+            ((string= today-MM  "09") "septembre")
+            ((string= today-MM  "10") "octobre")
+            ((string= today-MM  "11") "novembre")
+            ((string= today-MM  "12") "décembre")
+            (t (error "Month not recognized: %s" today-MM)))
+           )
+          (today-YYYY (format-time-string "%Y")) ; 2023
+          (today-in-French
+           (concat day-number-in-French
+                   " "
+                   month-in-French
+                   " "
+                   today-YYYY))) ; end of let*
+     
+     (if with-day-in-week-p
+         (let* ((day-in-week (format-time-string "%u")) ; 1, 2... 7
+                (day-in-week-in-French
+                 (cond
+                  ((string= day-in-week "1") "lundi")
+                  ((string= day-in-week "2") "mardi")
+                  ((string= day-in-week "3") "mercredi")
+                  ((string= day-in-week "4") "jeudi")
+                  ((string= day-in-week "5") "vendredi")
+                  ((string= day-in-week "6") "samedi")
+                  ((string= day-in-week "7") "dimanche")
+                  (t (error "Day in week not recognized: %s" day-in-week)))))
+           (concat day-in-week-in-French " " today-in-French))
+       today-in-French)))
+
+;; v1:
+;;
+;; (defun my/today-in-French ()
+;;   "'25 août 2023' or similar
+;; (v1, available in occisn/elisp-utils GitHub repository)"
+;;   (concat (my/day-number-in-French (my/today-DD))
+;;           " "
+;;           (my/month-in-French (my/today-MM))
+;;           " "
+;;           (my/today-YYYY)))
 
 ;;; end
