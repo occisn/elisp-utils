@@ -51,4 +51,15 @@ May return 0 in case of problem encoutered by PowerShell.
 	  (res (shell-command-to-string cmd2)))
      (/ (string-to-number (string-trim res)) 1000000)))
 
+(defun my/list-of-directories-and-subdirectories-from (root &optional sorted-p)
+   "Return the list of directories and subdirectories under ROOT (not included).
+If SORTED-P is true, the list is alphabetically sorted.
+Requires 'f' package.
+(v1, available in occisn/elisp-utils GitHub repository)"
+   (let* ((list1 nil))
+     (f-directories root (lambda (folder) (push folder list1)) t)
+     (if sorted-p
+         (sort list1 #'string<)
+       list1)))
+
 ;;;; === end

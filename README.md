@@ -34,7 +34,8 @@ File **files.el**
    - function `my/insert-directories-in-file-list`  
    - function `my/file-size-Mo`  
    - function `my/nb-of-elements-in-directory`  
-   - function `my/size-of-folder-in-Mo`
+   - function `my/size-of-folder-in-Mo`  
+   - function `!my/list-of-directories-and-subdirectories-from`
    
 File **strings.el**  
    - function `my/string-remove-surrounding-quotes`  
