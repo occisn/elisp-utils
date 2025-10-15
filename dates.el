@@ -66,7 +66,7 @@
   (should (string= "jeudi" (my/date-to-day-in-week-in-French "2022-11-10"))))
 
 (defun my/today-day-in-week-in-French ()
-  "lundi, mardi... today
+  "lundi, mardi... dimanche
 (v1, available in occisn/elisp-utils GitHub repository)"
   (my/day-in-week-in-French (format-time-string "%u")))
 
