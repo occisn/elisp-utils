@@ -32,6 +32,7 @@ File **numbers.el**
 
 File **files.el**  
    - function `my/insert-directories-in-file-list`  
+   - function `my/get-file-last-modification-date`  
    - function `my/file-size-Mo`  
    - function `my/nb-of-elements-in-directory`  
    - function `my/size-of-folder-in-Mo`  

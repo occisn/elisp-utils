@@ -27,14 +27,19 @@ d1/ d1/a.org d1/b.org d2/ d2/c.org d3/ d3/d.org
 	   '("d1/" "d1/a.org" "d1/b.org" "d2/" "d2/c.org" "d3/" "d3/d.org")
 	   (my/insert-directories-in-file-list '("d1/a.org" "d1/b.org" "d2/c.org" "d3/d.org")))))
 
-(defun my/file-size-Mo (filename)
-   "Return file size of FILENAME in Mo.
+(defun my/get-file-last-modification-date (file-full-name)
+   "Return the date of last modification (as Lisp timestamp) of FILE-FULL-NAME file.
 (v1, available in occisn/elisp-utils GitHub repository)"
-   (round
-    (/
-     (file-attribute-size
-      (file-attributes filename))
-     1000000)))
+   (nth 5 (file-attributes file-full-name)))
+
+(defun my/file-size-Mo (filename)
+  "Return file size of FILENAME in Mo.
+(v1, available in occisn/elisp-utils GitHub repository)"
+  (round
+   (/
+    (file-attribute-size
+     (file-attributes filename))
+    1000000)))
 
 (defun my/nb-of-elements-in-directory (folder)
    "Return number of elements in FOLDER, including sub-folders (no recursive investigation of subdirectories).
