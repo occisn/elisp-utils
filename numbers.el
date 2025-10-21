@@ -52,7 +52,7 @@ ACC0 is an accumulator used during recursion.
   (should (= 1 (my/reverse-number 1)))
   (should (= 321 (my/reverse-number 123))))
 
-;; usage in traditional Emacs Lisp without 'cl
+;; usage in traditional Emacs Lisp without cl-lib
 (when nil  
   (letrec (
            ;; 'reverse-number'
