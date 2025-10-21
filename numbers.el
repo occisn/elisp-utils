@@ -30,8 +30,48 @@ For instance: 123456 as a number--> 123,456 as a string
 		 (match-string 2 num))))
     num))
 
-(ert-deftest init-test-number-grouping ()
+(ert-deftest test-number-grouping ()
   :tags '(elisp-utils)
   (should (string= "1,234,567" (my/add-number-grouping 1234567))))
+
+(defun my/reverse-number (n &optional acc0)
+  "Reverse the N, which is supposed to be an integer >= 0.
+For instance: 123 --> 321.
+ACC0 is an accumulator used during recursion.
+(v1, available in occisn/elisp-utils GitHub repository)"
+  (let ((acc (or acc0 0)))
+    (if (= n 0)
+	acc
+      (let ((f (floor n 10))
+	    (r (mod n 10)))
+	(nox/reverse-number f (+ (* 10 acc) r))))))
+
+(ert-deftest test-reverse-number ()
+  :tags '(elisp-utils)
+  (should (= 0 (my/reverse-number 0)))
+  (should (= 1 (my/reverse-number 1)))
+  (should (= 321 (my/reverse-number 123))))
+
+;; usage in traditional Emacs Lisp without 'cl
+(when nil  
+  (letrec (
+           ;; 'reverse-number'
+           ;; Reverse the N, which is supposed to be an integer >= 0.
+           ;; For instance: 123 --> 321.
+           ;; ACC0 is an accumulator used during recursion.
+           ;; (v1, available in occisn/elisp-utils GitHub repository)
+           (sub-reverse-number (lambda (n acc0)
+                                 
+                                 (let ((acc (or acc0 0)))
+                                   (if (= n 0)
+	                               acc
+                                     (let ((f (floor n 10))
+	                                   (r (mod n 10)))
+	                               (funcall sub-reverse-number f (+ (* 10 acc) r)))))))
+           (reverse-number (lambda (n)
+                             (funcall sub-reverse-number n 0))))
+    
+    ;; do something
+    ))
 
 ;;;; === end

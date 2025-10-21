@@ -28,7 +28,8 @@ File **macros.el**
    
 File **numbers.el**  
    - function `my/number-to-string-with-comma-as-thousand-separator`  
-   - function `my/add-number-grouping`
+   - function `my/add-number-grouping`  
+   - function `my/reverse-number`
 
 File **files.el**  
    - function `my/insert-directories-in-file-list`  
@@ -36,7 +37,7 @@ File **files.el**
    - function `my/file-size-Mo`  
    - function `my/nb-of-elements-in-directory`  
    - function `my/size-of-folder-in-Mo`  
-   - function `!my/list-of-directories-and-subdirectories-from`
+   - function `my/list-of-directories-and-subdirectories-from`
    
 File **strings.el**  
    - function `my/string-remove-surrounding-quotes`  
