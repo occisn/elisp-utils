@@ -44,7 +44,7 @@ ACC0 is an accumulator used during recursion.
 	acc
       (let ((f (floor n 10))
 	    (r (mod n 10)))
-	(nox/reverse-number f (+ (* 10 acc) r))))))
+	(my/reverse-number f (+ (* 10 acc) r))))))
 
 (ert-deftest test-reverse-number ()
   :tags '(elisp-utils)
@@ -73,5 +73,99 @@ ACC0 is an accumulator used during recursion.
     
     ;; do something
     ))
+
+(defun my/isqrt (n)
+  "Return the integer square root of N (largest integer <= sqrt(N)).
+N is supposed to be >= 0.
+This code is written in traditional Emacs Lisp, without cl-lib (where the equivalent exists: cl-isqrt).
+(v1, available in occisn/elisp-utils GitHub repository)"
+  (cond
+   ((= n 0) 0)
+   ((< n 4) 1)
+   (t
+    ;; Newton's method
+    (let* ((x n)
+           (y (/ (+ x (/ n x)) 2)))
+      (while (< y x)
+        (setq x y)
+        (setq y (/ (+ x (/ n x)) 2)))
+      x))))
+
+(ert-deftest test-isqrt ()
+  :tags '(elisp-utils)
+  (should (= 0 (my/isqrt 0)))
+  (should (= 1 (my/isqrt 1)))
+  (should (= 1 (my/isqrt 2)))
+  (should (= 3 (my/isqrt 10)))
+  (should (= 4 (my/isqrt 16)))
+  (should (= 5 (my/isqrt 27)))
+  (should (= 9 (my/isqrt 99)))
+  (should (= 10 (my/isqrt 100)))
+  (should (= 11111 (my/isqrt 123456789))))
+
+(defun my/primep (n)
+  "Return t if and only if N is prime. N is supposed to be an integer >= 1.
+Inspired by https://github.com/tkych/cl-mod-prime
+(v1, available in occisn/elisp-utils GitHub repository)"
+  (cond ((= 1 n) nil)
+	((member n '(2 3 5 7)) t)
+	((cl-evenp n) nil)
+	((zerop (mod n 3)) nil)
+	(t (cl-loop for factor from 5 by 6
+		    with root-n = (cl-isqrt n)
+		    while (<= factor root-n)
+		    never (or (zerop (mod n factor))
+			      (zerop (mod n (+ factor 2))))))))
+
+(ert-deftest test-primep ()
+  :tags '(elisp-utils)
+  (should (not (my/primep 1)))
+  (should (my/primep 2))
+  (should (my/primep 3))
+  (should (not (my/primep 4))))
+
+(defun my/primep--traditional (n)
+  "Return t if and only if N is prime. N is supposed to be an integer >= 1.
+Inspired by https://github.com/tkych/cl-mod-prime.
+This code is written in traditional Emacs Lisp, without cl-lib.
+(v1, available in occisn/elisp-utils GitHub repository)"
+  
+  (let ((isqrt (lambda (n)
+                 "Return the integer square root of N (largest integer <= sqrt(N)).
+N is supposed to be >= 0.
+This code is written in traditional Emacs Lisp, without cl-lib (where the equivalent exists: cl-isqrt).
+(v1, available in occisn/elisp-utils GitHub repository)"
+                 (cond
+                  ((= n 0) 0)
+                  ((< n 4) 1)
+                  (t
+                   ;; Newton's method
+                   (let* ((x n)
+                          (y (/ (+ x (/ n x)) 2)))
+                     (while (< y x)
+                       (setq x y)
+                       (setq y (/ (+ x (/ n x)) 2)))
+                     x))))))
+    
+    (cond ((= 1 n) nil)
+	  ((member n '(2 3 5 7)) t)
+	  ((zerop (mod n 2)) nil)
+	  ((zerop (mod n 3)) nil)
+	  (t (let ((factor 5)
+                   (root-n (funcall isqrt n))
+                   (result t))
+               (while (<= factor root-n)
+                 (when (or (zerop (mod n factor))
+			   (zerop (mod n (+ factor 2))))
+                   (setq result nil))
+                 (setq factor (+ factor 6))) ; end of while
+               result)))))
+
+(ert-deftest test-primep--traditional ()
+  :tags '(elisp-utils)
+  (should (not (my/primep--traditional 1)))
+  (should (my/primep--traditional 2))
+  (should (my/primep--traditional 3))
+  (should (not (my/primep--traditional 4))))
 
 ;;;; === end
