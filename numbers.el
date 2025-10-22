@@ -168,4 +168,44 @@ This code is written in traditional Emacs Lisp, without cl-lib (where the equiva
   (should (my/primep--traditional 3))
   (should (not (my/primep--traditional 4))))
 
+;; usage in traditional Emacs Lisp without cl-lib:
+(when nil
+  (let* ((isqrt (lambda (n)
+                  "Return the integer square root of N (largest integer <= sqrt(N)).
+N is supposed to be >= 0.
+This code is written in traditional Emacs Lisp, without cl-lib (where the equivalent exists: cl-isqrt).
+(v1, available in occisn/elisp-utils GitHub repository)"
+                  (cond
+                   ((= n 0) 0)
+                   ((< n 4) 1)
+                   (t
+                    ;; Newton's method
+                    (let* ((x n)
+                           (y (/ (+ x (/ n x)) 2)))
+                      (while (< y x)
+                        (setq x y)
+                        (setq y (/ (+ x (/ n x)) 2)))
+                      x)))))
+         (primep (lambda (n)
+                   "Return t if and only if N is prime. N is supposed to be an integer >= 1.
+Inspired by https://github.com/tkych/cl-mod-prime.
+This code is written in traditional Emacs Lisp, without cl-lib.
+(v1, available in occisn/elisp-utils GitHub repository)"
+                   (cond ((= 1 n) nil)
+	                 ((member n '(2 3 5 7)) t)
+	                 ((zerop (mod n 2)) nil)
+	                 ((zerop (mod n 3)) nil)
+	                 (t (let ((factor 5)
+                                  (root-n (funcall isqrt n))
+                                  (result t))
+                              (while (<= factor root-n)
+                                (when (or (zerop (mod n factor))
+			                  (zerop (mod n (+ factor 2))))
+                                  (setq result nil))
+                                (setq factor (+ factor 6)))
+                              result))))))
+
+    ;; do something
+    ))
+
 ;;;; === end
