@@ -29,7 +29,10 @@ File **macros.el**
 File **numbers.el**  
    - function `my/number-to-string-with-comma-as-thousand-separator`  
    - function `my/add-number-grouping`  
-   - function `my/reverse-number`
+   - function `my/reverse-number`  
+   - function `my/isqrt`  
+   - function `my/primep`  
+   - function `my/primep-traditional`
 
 File **files.el**  
    - function `my/insert-directories-in-file-list`  
