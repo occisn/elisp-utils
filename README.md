@@ -30,9 +30,11 @@ File **numbers.el**
    - function `my/number-to-string-with-comma-as-thousand-separator`  
    - function `my/add-number-grouping`  
    - function `my/reverse-number`  
-   - function `my/isqrt`  
+   - function `my/isqrt--traditional`  
    - function `my/primep`  
-   - function `my/primep-traditional`
+   - function `my/primep-_traditional`  
+   - function `my/gcd--traditional`  
+   - function `my/lcm--traditional`
 
 File **files.el**  
    - function `my/insert-directories-in-file-list`  

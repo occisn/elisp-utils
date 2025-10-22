@@ -52,29 +52,7 @@ ACC0 is an accumulator used during recursion.
   (should (= 1 (my/reverse-number 1)))
   (should (= 321 (my/reverse-number 123))))
 
-;; usage in traditional Emacs Lisp without cl-lib
-(when nil  
-  (letrec (
-           ;; 'reverse-number'
-           ;; Reverse the N, which is supposed to be an integer >= 0.
-           ;; For instance: 123 --> 321.
-           ;; ACC0 is an accumulator used during recursion.
-           ;; (v1, available in occisn/elisp-utils GitHub repository)
-           (sub-reverse-number (lambda (n acc0)
-                                 
-                                 (let ((acc (or acc0 0)))
-                                   (if (= n 0)
-	                               acc
-                                     (let ((f (floor n 10))
-	                                   (r (mod n 10)))
-	                               (funcall sub-reverse-number f (+ (* 10 acc) r)))))))
-           (reverse-number (lambda (n)
-                             (funcall sub-reverse-number n 0))))
-    
-    ;; do something
-    ))
-
-(defun my/isqrt (n)
+(defun my/isqrt--traditional (n)
   "Return the integer square root of N (largest integer <= sqrt(N)).
 N is supposed to be >= 0.
 This code is written in traditional Emacs Lisp, without cl-lib (where the equivalent exists: cl-isqrt).
@@ -93,15 +71,15 @@ This code is written in traditional Emacs Lisp, without cl-lib (where the equiva
 
 (ert-deftest test-isqrt ()
   :tags '(elisp-utils)
-  (should (= 0 (my/isqrt 0)))
-  (should (= 1 (my/isqrt 1)))
-  (should (= 1 (my/isqrt 2)))
-  (should (= 3 (my/isqrt 10)))
-  (should (= 4 (my/isqrt 16)))
-  (should (= 5 (my/isqrt 27)))
-  (should (= 9 (my/isqrt 99)))
-  (should (= 10 (my/isqrt 100)))
-  (should (= 11111 (my/isqrt 123456789))))
+  (should (= 0 (my/isqrt--traditional 0)))
+  (should (= 1 (my/isqrt--traditional 1)))
+  (should (= 1 (my/isqrt--traditional 2)))
+  (should (= 3 (my/isqrt--traditional 10)))
+  (should (= 4 (my/isqrt--traditional 16)))
+  (should (= 5 (my/isqrt--traditional 27)))
+  (should (= 9 (my/isqrt--traditional 99)))
+  (should (= 10 (my/isqrt--traditional 100)))
+  (should (= 11111 (my/isqrt--traditional 123456789))))
 
 (defun my/primep (n)
   "Return t if and only if N is prime. N is supposed to be an integer >= 1.
@@ -128,38 +106,22 @@ Inspired by https://github.com/tkych/cl-mod-prime
   "Return t if and only if N is prime. N is supposed to be an integer >= 1.
 Inspired by https://github.com/tkych/cl-mod-prime.
 This code is written in traditional Emacs Lisp, without cl-lib.
+Requires my/isqrt--traditional.
 (v1, available in occisn/elisp-utils GitHub repository)"
   
-  (let ((isqrt (lambda (n)
-                 "Return the integer square root of N (largest integer <= sqrt(N)).
-N is supposed to be >= 0.
-This code is written in traditional Emacs Lisp, without cl-lib (where the equivalent exists: cl-isqrt).
-(v1, available in occisn/elisp-utils GitHub repository)"
-                 (cond
-                  ((= n 0) 0)
-                  ((< n 4) 1)
-                  (t
-                   ;; Newton's method
-                   (let* ((x n)
-                          (y (/ (+ x (/ n x)) 2)))
-                     (while (< y x)
-                       (setq x y)
-                       (setq y (/ (+ x (/ n x)) 2)))
-                     x))))))
-    
-    (cond ((= 1 n) nil)
-	  ((member n '(2 3 5 7)) t)
-	  ((zerop (mod n 2)) nil)
-	  ((zerop (mod n 3)) nil)
-	  (t (let ((factor 5)
-                   (root-n (funcall isqrt n))
-                   (result t))
-               (while (<= factor root-n)
-                 (when (or (zerop (mod n factor))
-			   (zerop (mod n (+ factor 2))))
-                   (setq result nil))
-                 (setq factor (+ factor 6))) ; end of while
-               result)))))
+  (cond ((= 1 n) nil)
+	((member n '(2 3 5 7)) t)
+	((zerop (mod n 2)) nil)
+	((zerop (mod n 3)) nil)
+	(t (let ((factor 5)
+                 (root-n (my/isqrt--traditional n))
+                 (result t))
+             (while (<= factor root-n)
+               (when (or (zerop (mod n factor))
+			 (zerop (mod n (+ factor 2))))
+                 (setq result nil))
+               (setq factor (+ factor 6))) ; end of while
+             result))))
 
 (ert-deftest test-primep--traditional ()
   :tags '(elisp-utils)
@@ -168,44 +130,27 @@ This code is written in traditional Emacs Lisp, without cl-lib (where the equiva
   (should (my/primep--traditional 3))
   (should (not (my/primep--traditional 4))))
 
-;; usage in traditional Emacs Lisp without cl-lib:
-(when nil
-  (let* ((isqrt (lambda (n)
-                  "Return the integer square root of N (largest integer <= sqrt(N)).
-N is supposed to be >= 0.
-This code is written in traditional Emacs Lisp, without cl-lib (where the equivalent exists: cl-isqrt).
+(defun my/gcd--traditional (a b)
+  "Return gcd of A and B.
+Traditional equivalent of cl-gcd.
 (v1, available in occisn/elisp-utils GitHub repository)"
-                  (cond
-                   ((= n 0) 0)
-                   ((< n 4) 1)
-                   (t
-                    ;; Newton's method
-                    (let* ((x n)
-                           (y (/ (+ x (/ n x)) 2)))
-                      (while (< y x)
-                        (setq x y)
-                        (setq y (/ (+ x (/ n x)) 2)))
-                      x)))))
-         (primep (lambda (n)
-                   "Return t if and only if N is prime. N is supposed to be an integer >= 1.
-Inspired by https://github.com/tkych/cl-mod-prime.
-This code is written in traditional Emacs Lisp, without cl-lib.
-(v1, available in occisn/elisp-utils GitHub repository)"
-                   (cond ((= 1 n) nil)
-	                 ((member n '(2 3 5 7)) t)
-	                 ((zerop (mod n 2)) nil)
-	                 ((zerop (mod n 3)) nil)
-	                 (t (let ((factor 5)
-                                  (root-n (funcall isqrt n))
-                                  (result t))
-                              (while (<= factor root-n)
-                                (when (or (zerop (mod n factor))
-			                  (zerop (mod n (+ factor 2))))
-                                  (setq result nil))
-                                (setq factor (+ factor 6)))
-                              result))))))
+  (if (zerop b)
+      (abs a)
+    (my/gcd--traditional b (mod a b))))
 
-    ;; do something
-    ))
+(ert-deftest test-gcd--traditional ()
+  :tags '(elisp-utils)
+  (should (= 3 (my/gcd--traditional 6 15))))
+
+(defun my/lcm--traditional (a b)
+  "Return lcm of A and B.
+Traditional equivalent of cl-lcm.
+Requires my/gcd--traditional.
+(v1, available in occisn/elisp-utils GitHub repository)"
+  (/ (abs (* a b)) (my/gcd--traditional a b)))
+
+(ert-deftest test-lcm--traditional ()
+  :tags '(elisp-utils)
+  (should (= 12 (my/lcm--traditional 3 4))))
 
 ;;;; === end
