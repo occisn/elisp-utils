@@ -153,4 +153,20 @@ Requires my/gcd--traditional.
   :tags '(elisp-utils)
   (should (= 12 (my/lcm--traditional 3 4))))
 
+(defun my/largest-prime-factor (n)
+  "Return the largest prime factor of N. N is supposed to be an integer > 1/.
+Inspired by https://stackoverflow.com/questions/23287/algorithm-to-find-largest-prime-factor-of-a-number
+Could perhars be improved by testing only odd divisors, divisors under 6n+-1 format, etc.
+(v1, available in occisn/elisp-utils GitHub repository)"
+  (let ((i 2))
+    (while (> n 1)
+      (if (= 0 (mod n i)) ; n multiple of i
+	  (setq n (/ n i))
+	(setq i (+ i 1))))
+    i))
+
+(ert-deftest test-largest-prime-factor ()
+  (should (= 2 (my/largest-prime-factor 2)))
+  (should (= 29 (my/largest-prime-factor 13195))))
+
 ;;;; === end

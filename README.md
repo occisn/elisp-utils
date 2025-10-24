@@ -34,7 +34,8 @@ File **numbers.el**
    - function `my/primep`  
    - function `my/primep-_traditional`  
    - function `my/gcd--traditional`  
-   - function `my/lcm--traditional`
+   - function `my/lcm--traditional`  
+   - function `my/largest-prime-factor`
 
 File **files.el**  
    - function `my/insert-directories-in-file-list`  
