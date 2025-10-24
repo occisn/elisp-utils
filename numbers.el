@@ -83,7 +83,6 @@ This code is written in traditional Emacs Lisp, without cl-lib (where the equiva
 
 (defun my/primep (n)
   "Return t if and only if N is prime. N is supposed to be an integer >= 1.
-Inspired by https://github.com/tkych/cl-mod-prime
 (v1, available in occisn/elisp-utils GitHub repository)"
   (cond ((= 1 n) nil)
 	((member n '(2 3 5 7)) t)
@@ -94,6 +93,7 @@ Inspired by https://github.com/tkych/cl-mod-prime
 		    while (<= factor root-n)
 		    never (or (zerop (mod n factor))
 			      (zerop (mod n (+ factor 2))))))))
+;; Inspired by https://github.com/tkych/cl-mod-prime
 
 (ert-deftest test-primep ()
   :tags '(elisp-utils)
@@ -104,7 +104,6 @@ Inspired by https://github.com/tkych/cl-mod-prime
 
 (defun my/primep--traditional (n)
   "Return t if and only if N is prime. N is supposed to be an integer >= 1.
-Inspired by https://github.com/tkych/cl-mod-prime.
 This code is written in traditional Emacs Lisp, without cl-lib.
 Requires my/isqrt--traditional.
 (v1, available in occisn/elisp-utils GitHub repository)"
@@ -122,6 +121,7 @@ Requires my/isqrt--traditional.
                  (setq result nil))
                (setq factor (+ factor 6))) ; end of while
              result))))
+;; Inspired by https://github.com/tkych/cl-mod-prime.
 
 (ert-deftest test-primep--traditional ()
   :tags '(elisp-utils)
@@ -154,9 +154,7 @@ Requires my/gcd--traditional.
   (should (= 12 (my/lcm--traditional 3 4))))
 
 (defun my/largest-prime-factor (n)
-  "Return the largest prime factor of N. N is supposed to be an integer > 1/.
-Inspired by https://stackoverflow.com/questions/23287/algorithm-to-find-largest-prime-factor-of-a-number
-Could perhars be improved by testing only odd divisors, divisors under 6n+-1 format, etc.
+  "Return the largest prime factor of N. N is supposed to be an integer > 1.
 (v1, available in occisn/elisp-utils GitHub repository)"
   (let ((i 2))
     (while (> n 1)
@@ -164,6 +162,8 @@ Could perhars be improved by testing only odd divisors, divisors under 6n+-1 for
 	  (setq n (/ n i))
 	(setq i (+ i 1))))
     i))
+;; Inspired by https://stackoverflow.com/questions/23287/algorithm-to-find-largest-prime-factor-of-a-number
+;; Could perhaps be improved by testing only odd divisors, divisors under 6n+-1 format, etc.
 
 (ert-deftest test-largest-prime-factor ()
   (should (= 2 (my/largest-prime-factor 2)))
