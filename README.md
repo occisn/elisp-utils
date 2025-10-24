@@ -35,7 +35,9 @@ File **numbers.el**
    - function `my/primep-_traditional`  
    - function `my/gcd--traditional`  
    - function `my/lcm--traditional`  
-   - function `my/largest-prime-factor`
+   - function `my/largest-prime-factor`  
+   - function `my/eratosthenes-sieve`  
+   - function `my/eratosthenes-sieve--traditional`
 
 File **files.el**  
    - function `my/insert-directories-in-file-list`  

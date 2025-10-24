@@ -69,7 +69,7 @@ This code is written in traditional Emacs Lisp, without cl-lib (where the equiva
         (setq y (/ (+ x (/ n x)) 2)))
       x))))
 
-(ert-deftest test-isqrt ()
+(ert-deftest test-isqrt--traditional ()
   :tags '(elisp-utils)
   (should (= 0 (my/isqrt--traditional 0)))
   (should (= 1 (my/isqrt--traditional 1)))
@@ -166,7 +166,74 @@ Requires my/gcd--traditional.
 ;; Could perhaps be improved by testing only odd divisors, divisors under 6n+-1 format, etc.
 
 (ert-deftest test-largest-prime-factor ()
+  :tags '(elisp-utils)
   (should (= 2 (my/largest-prime-factor 2)))
   (should (= 29 (my/largest-prime-factor 13195))))
 
+(defun my/eratosthenes-sieve (lim)
+  "Return a boolean vector representing the result of Eratosthenes sieve on |[ 0 ; LIM |[.
+In this vector, t = prime ; nil = non prime.
+(v1, available in occisn/elisp-utils GitHub repository)"
+  (let ((bv (make-bool-vector lim t)))
+    (aset bv 0 nil) ; 0 is not prime
+    (aset bv 1 nil) ; 1 is not prime
+    ;; 2 is prime, so change nothing in the vector
+    ;; 4 and subsequent even numbers are not prime:
+    (cl-loop for i from 4 below lim by 2
+	     do (aset bv i nil))
+    ;; Sieve:
+    (cl-loop for i from 3
+	     while (<= (* i i) lim)
+	     when (aref bv i)
+	     do (cl-loop for j from (* i i) below lim by (* 2 i)
+			 do (aset bv j nil)))
+    bv))
+;; Inspired by https://fr.wikipedia.org/wiki/Crible_d%27%C3%89ratosth%C3%A8ne
+
+(ert-deftest test-eratosthenes-sieve ()
+  :tags '(elisp-utils)
+  (should (= 76127
+             (let* ((lim 1000)
+	            (bv (my/eratosthenes-sieve lim)))
+               (cl-loop for i from 0 below lim
+	                when (aref bv i)
+	                sum i)))) ; sum of primes below 1000 = 76127
+  )
+(defun my/eratosthenes-sieve--traditional (lim)
+  "Return a boolean vector representing the result of Eratosthenes sieve on |[ 0 ; LIM |[.
+In this vector, t = prime ; nil = non prime.
+Written in traditional Emacs Lisp, without cl-lib.
+(v1, available in occisn/elisp-utils GitHub repository)"
+  (let ((bv (make-bool-vector lim t)))
+    (aset bv 0 nil)    ; 0 is not prime
+    (aset bv 1 nil)    ; 1 is not prime
+    ;; 2 is prime, so change nothing in the vector
+    ;; 4 and subsequent even numbers are not prime:
+    (let ((i 4))
+      (while (< i lim)
+        (aset bv i nil)
+        (setq i (+ i 2))))
+    ;; Sieve:
+    (let ((i 3))
+      (while (<= (* i i) lim)
+        (when (aref bv i)
+          (let ((j (* i i)))
+            (while (< j lim)
+              (aset bv j nil)
+              (setq j (+ j (* 2 i))))))
+        (setq i (1+ i)))
+      bv)))
+;; Inspired by https://fr.wikipedia.org/wiki/Crible_d%27%C3%89ratosth%C3%A8ne
+
+(ert-deftest test-eratosthenes-sieve--traditional ()
+  :tags '(elisp-utils)
+  (should (= 76127
+             (let* ((lim 1000)
+	            (bv (my/eratosthenes-sieve--traditional lim)))
+               (cl-loop for i from 0 below lim
+	                when (aref bv i)
+	                sum i)))) ; sum of primes below 1000 = 76127
+  
+
 ;;;; === end
+  )
