@@ -18,6 +18,9 @@ File **dates.el**
    - function `my/month-in-French`  
    - function `my/english-month-to-number`  
    - function `my/today-in-French`
+   
+File **french-numbers.el**  
+   - function `my/en-toutes-lettres`
 
 File **macros.el**  
    - macro `aprogn`  
