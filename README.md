@@ -58,4 +58,6 @@ File **strings.el**
 File **windows.el**  
    - function `add-to-environment-variable`
    
+Any comment? Open an [issue](https://github.com/occisn/elisp-utils/issues), or start a discussion [here](https://github.com/occisn/elisp-utils/discussions) or [at profile level](https://github.com/occisn/occisn/discussions).
+
 (end of README)
