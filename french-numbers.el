@@ -12,7 +12,8 @@
 (defun my/en-toutes-lettres (n)
   "This function converts a number N into its written equivalent in words in French, according to the rules prior to 1990 reform.
 For instance : 101 --> 'cent un'.
-N shall be <= 999 999 999 999"
+N shall be <= 999 999 999 999
+(v1 as of 2017-02-16, available in occisn/elisp-utils GitHub repository)"
 
   (let ((unites ["zero" "un" "deux" "trois" "quatre" "cinq" "six" "sept" "huit" "neuf" "dix" "onze" "douze" "treize" "quatorze" "quinze" "seize" "dix-sept" "dix-huit" "dix-neuf"])
 
