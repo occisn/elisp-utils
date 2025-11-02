@@ -54,6 +54,9 @@ File **strings.el**
    - function `my/string-remove-surrounding-quotes`  
    - function `my/string-suffix-p`  
    - function `my/split-string-at-first-delimiter`
+   
+File **trampoline.el**  
+   - function `my/trampoline` with an example
 
 File **windows.el**  
    - function `add-to-environment-variable`
