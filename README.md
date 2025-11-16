@@ -23,7 +23,7 @@ File **dates.el**
    - function `my/english-month-to-number`  
    - function `my/today-in-French`
    
-File **french-numbers.el**  
+File **numbers-french.el**  
    - function `my/en-toutes-lettres`
 
 File **macros.el**  
