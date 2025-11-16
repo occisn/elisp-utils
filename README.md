@@ -8,7 +8,7 @@ Many functions are proposed with a 'traditional' implementation, not relying on 
 
 Tests can be performed with `(ert '(tag elisp-utils))`
 
-File **dates.el**  
+Section **dates.el**  
    - function `my/lisp-timestamp-to-YYYY-MM-DD`  
    - function `my/YYYY-MM-DD-to-lisp-timestamp`  
    - function `my/today-YYYY-MM-DD`  
@@ -23,17 +23,14 @@ File **dates.el**
    - function `my/english-month-to-number`  
    - function `my/today-in-French`
    
-File **numbers-french.el**  
-   - function `my/en-toutes-lettres`
-
-File **macros.el**  
+Section **macros.el**  
    - macro `aprogn`  
    - macro `amapcar`  
    - macro `let+`  
    - macro `awhen`  
    - macro `aif`
    
-File **numbers.el**  
+Section **numbers.el**  
    - function `my/number-to-string-with-comma-as-thousand-separator`  
    - function `my/add-number-grouping`  
    - function `my/reverse-number`  
@@ -46,7 +43,10 @@ File **numbers.el**
    - function `my/eratosthenes-sieve`  
    - function `my/eratosthenes-sieve--traditional`
 
-File **files.el**  
+Section **numbers-french.el**  
+   - function `my/en-toutes-lettres`
+
+Section **files.el**  
    - function `my/insert-directories-in-file-list`  
    - function `my/get-file-last-modification-date`  
    - function `my/file-size-Mo`  
@@ -54,16 +54,13 @@ File **files.el**
    - function `my/size-of-folder-in-Mo`  
    - function `my/list-of-directories-and-subdirectories-from`
    
-File **strings.el**  
+Section **strings.el**  
    - function `my/string-remove-surrounding-quotes`  
    - function `my/string-suffix-p`  
    - function `my/split-string-at-first-delimiter`
    
-File **trampoline.el**  
+Section **trampoline.el**  
    - function `my/trampoline` with an example
-
-File **windows.el**  
-   - function `add-to-environment-variable`
    
 Any comment? Open an [issue](https://github.com/occisn/elisp-utils/issues), or start a discussion [here](https://github.com/occisn/elisp-utils/discussions) or [at profile level](https://github.com/occisn/occisn/discussions).
 
