@@ -1,6 +1,8 @@
 ;;; -*- lexical-binding: t; -*-
 
-;;; === to test: (ert '(tag elisp-utils))
+;;; === to test:
+;;;    C-c C-k
+;;;    M-: (ert '(tag elisp-utils))
 
 ;;; all functions in the same file to facilitate tests
 
@@ -557,6 +559,7 @@ Requires my/isqrt--traditional
 (ert-deftest test-largest-prime-factor--traditional ()
   :tags '(elisp-utils)
   (should (= 2 (my/largest-prime-factor--traditional 2)))
+  (should (= 17 (my/largest-prime-factor--traditional 76576500)))
   (should (= 29 (my/largest-prime-factor--traditional 13195))))
 
 (defun my/eratosthenes-sieve (lim)
@@ -564,8 +567,8 @@ Requires my/isqrt--traditional
 In this vector, t = prime ; nil = non prime.
 (v1, available in occisn/elisp-utils GitHub repository)"
   (let ((bv (make-bool-vector lim t)))
-    (aset bv 0 nil) ; 0 is not prime
-    (aset bv 1 nil) ; 1 is not prime
+    (aset bv 0 nil)    ; 0 is not prime
+    (aset bv 1 nil)    ; 1 is not prime
     ;; 2 is prime, so change nothing in the vector
     ;; 4 and subsequent even numbers are not prime:
     (cl-loop for i from 4 below lim by 2
