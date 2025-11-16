@@ -153,22 +153,45 @@ Requires my/gcd--traditional.
   :tags '(elisp-utils)
   (should (= 12 (my/lcm--traditional 3 4))))
 
-(defun my/largest-prime-factor (n)
+(defun my/largest-prime-factor--traditional (n)
   "Return the largest prime factor of N. N is supposed to be an integer > 1.
-(v1, available in occisn/elisp-utils GitHub repository)"
-  (let ((i 2))
-    (while (> n 1)
-      (if (= 0 (mod n i)) ; n multiple of i
-	  (setq n (/ n i))
-	(setq i (+ i 1))))
-    i))
-;; Inspired by https://stackoverflow.com/questions/23287/algorithm-to-find-largest-prime-factor-of-a-number
-;; Could perhaps be improved by testing only odd divisors, divisors under 6n+-1 format, etc.
+Requires my/isqrt--traditional
+(v2, available in occisn/elisp-utils GitHub repository)"
+  (let ((largest 0))
+    ;; Remove factors of 2
+    (while (= 0 (mod n 2))
+         (setf largest 2)
+         (setf n (/ n 2)))
 
-(ert-deftest test-largest-prime-factor ()
+    ;; Remove factors of 3
+    (while (= 0 (mod n 3))
+         (setf largest 3)
+         (setf n (/ n 3)))
+
+    ;; Test divisors of the form 6k-1 and 6k+1
+    (let ((i 5)
+          (isqrt-n (my/isqrt--traditional n)))
+      (while (<= i isqrt-n)
+           (cond
+             ((= 0 (mod n i))
+              (setf largest i)
+              (setf n (/ n i)))
+             ((= 0 (mod n (+ i 2)))
+              (setf largest (+ i 2))
+              (setf n (/ n (+ i 2))))
+             (t
+              (setf i (+ i 6))))))
+
+    ;; If n is still > 1, it is prime
+    (if (> n 1)
+        (setf largest n))
+
+    largest))
+
+(ert-deftest test-largest-prime-factor--traditional ()
   :tags '(elisp-utils)
-  (should (= 2 (my/largest-prime-factor 2)))
-  (should (= 29 (my/largest-prime-factor 13195))))
+  (should (= 2 (my/largest-prime-factor--traditional 2)))
+  (should (= 29 (my/largest-prime-factor--traditional 13195))))
 
 (defun my/eratosthenes-sieve (lim)
   "Return a boolean vector representing the result of Eratosthenes sieve on |[ 0 ; LIM |[.

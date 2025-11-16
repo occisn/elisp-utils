@@ -5,6 +5,7 @@ Personal utilities for Emacs Lisp.
 This repository is not supposed to be forked or included in another project. It is more a kind of shelf with many functions, where each function is self-supporting.
 
 Many functions are proposed with a 'traditional' implementation, not relying on `cl-xxx` functions.
+
 Tests can be performed with `(ert '(tag elisp-utils))`
 
 File **dates.el**  
@@ -41,7 +42,7 @@ File **numbers.el**
    - function `my/primep-_traditional`  
    - function `my/gcd--traditional`  
    - function `my/lcm--traditional`  
-   - function `my/largest-prime-factor`  
+   - function `my/largest-prime-factor--traditional`  
    - function `my/eratosthenes-sieve`  
    - function `my/eratosthenes-sieve--traditional`
 
