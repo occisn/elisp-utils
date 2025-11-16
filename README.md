@@ -6,7 +6,7 @@ This repository is not supposed to be forked or included in another project. It 
 
 Many functions are proposed with a 'traditional' implementation, not relying on `cl-xxx` functions.
 
-Tests can be performed with `(ert '(tag elisp-utils))`
+All functions have been gathered in an unique file to facilitate tests, which can be performed for all functions at once with `(ert '(tag elisp-utils))`
 
 Section **dates.el**  
    - function `my/lisp-timestamp-to-YYYY-MM-DD`  
