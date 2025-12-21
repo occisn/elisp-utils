@@ -1,0 +1,68 @@
+;;; -*- lexical-binding: t; -*-
+
+(defun my/insert-directories-in-file-list (files)
+  "Take a list of files, and return the same list with directories intertwined.
+
+For instance :
+d1/a.org d1/b.org d2/c.org d3/d.org
+-->
+d1/ d1/a.org d1/b.org d2/ d2/c.org d3/ d3/d.org
+(v1)"
+  (let ((current-dir "")
+	(files-intertwined-with-directories nil))
+    (cl-loop for filename in files
+	     for dir1 = (file-name-directory filename)
+	     do (progn
+		  (when (not (string= current-dir dir1))
+		    (push dir1 files-intertwined-with-directories)
+		    (setq current-dir dir1))
+		  (push filename files-intertwined-with-directories)))
+    (reverse files-intertwined-with-directories)))
+
+(ert-deftest test-insert-directories-in-file-list ()
+  :tags '(elisp-utils)
+  (should (equal
+	   '("d1/" "d1/a.org" "d1/b.org" "d2/" "d2/c.org" "d3/" "d3/d.org")
+	   (my/insert-directories-in-file-list '("d1/a.org" "d1/b.org" "d2/c.org" "d3/d.org")))))
+
+(defun my/get-file-last-modification-date (file-full-name)
+   "Return the date of last modification (as Lisp timestamp) of FILE-FULL-NAME file.
+(v1, available in occisn/elisp-utils GitHub repository)"
+   (nth 5 (file-attributes file-full-name)))
+
+(defun my/file-size-Mo (filename)
+  "Return file size of FILENAME in Mo.
+(v1, available in occisn/elisp-utils GitHub repository)"
+  (round
+   (/
+    (file-attribute-size
+     (file-attributes filename))
+    1000000)))
+
+(defun my/nb-of-elements-in-directory (folder)
+   "Return number of elements in FOLDER, including sub-folders (no recursive investigation of subdirectories).
+(v1, available in occisn/elisp-utils GitHub repository)"
+   (- (length (directory-files folder)) 2))
+
+(defun my/size-of-folder-in-Mo (folder)
+   "Return the size of FOLDER.
+Requires PowerShell on Windows.
+May return 0 in case of problem encoutered by PowerShell.
+(v1, available in occisn/elisp-utils GitHub repository)"
+   (let* ((cmd1 (format "(Get-ChildItem '%s' -Recurse | Measure-Object -Property Length -Sum -ErrorAction Stop).Sum" folder))
+	  (cmd2 (format "powershell.exe -Command \"%s\"" cmd1))
+	  (res (shell-command-to-string cmd2)))
+     (/ (string-to-number (string-trim res)) 1000000)))
+
+(defun my/list-of-directories-and-subdirectories-from (root &optional sorted-p)
+   "Return the list of directories and subdirectories under ROOT (not included).
+If SORTED-P is true, the list is alphabetically sorted.
+Requires 'f' package.
+(v1, available in occisn/elisp-utils GitHub repository)"
+   (let* ((list1 nil))
+     (f-directories root (lambda (folder) (push folder list1)) t)
+     (if sorted-p
+         (sort list1 #'string<)
+       list1)))
+
+;; end

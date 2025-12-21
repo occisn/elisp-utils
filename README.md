@@ -2,13 +2,13 @@
 
 Personal utilities for Emacs Lisp.
 
-This repository is not supposed to be forked or included in another project. It is more a kind of shelf with many functions, where each function is self-supporting.
+This project is a kind of shelf providing many functions. With a few clearly indicated exceptions, these functions are self-supporting. They do not require any dependency, or to be built/integrated in any specific way. Because "the truly reusable code is the one that you can simply copy-paste".
 
 Many functions are proposed with a 'traditional' implementation, not relying on `cl-xxx` functions.
 
-All functions have been gathered in an unique file to facilitate tests, which can be performed for all functions at once with `(ert '(tag elisp-utils))`
+A test suite is proposed through file `z_tests.el` (instructions inside).
 
-Section **dates.el**  
+File **dates-and-times.el**  
    - function `my/lisp-timestamp-to-YYYY-MM-DD`  
    - function `my/YYYY-MM-DD-to-lisp-timestamp`  
    - function `my/today-YYYY-MM-DD`  
@@ -23,30 +23,27 @@ Section **dates.el**
    - function `my/english-month-to-number`  
    - function `my/today-in-French`
    
-Section **macros.el**  
-   - macro `aprogn`  
-   - macro `amapcar`  
-   - macro `let+`  
-   - macro `awhen`  
-   - macro `aif`
-   
-Section **numbers.el**  
+File **integers.el**  
    - function `my/number-to-string-with-comma-as-thousand-separator`  
    - function `my/add-number-grouping`  
-   - function `my/reverse-number`  
    - function `my/isqrt--traditional`  
-   - function `my/primep`  
-   - function `my/primep-_traditional`  
    - function `my/gcd--traditional`  
    - function `my/lcm--traditional`  
+
+File **integers-digits.el**  
+   - function `my/reverse-number`  
+
+File **integers-french.el**  
+   - function `my/en-toutes-lettres`
+
+File **integers-primes.el**  
+   - function `my/primep`  
+   - function `my/primep-_traditional`  
    - function `my/largest-prime-factor--traditional`  
    - function `my/eratosthenes-sieve`  
    - function `my/eratosthenes-sieve--traditional`
 
-Section **numbers-french.el**  
-   - function `my/en-toutes-lettres`
-
-Section **files.el**  
+File **files.el**  
    - function `my/insert-directories-in-file-list`  
    - function `my/get-file-last-modification-date`  
    - function `my/file-size-Mo`  
@@ -54,12 +51,19 @@ Section **files.el**
    - function `my/size-of-folder-in-Mo`  
    - function `my/list-of-directories-and-subdirectories-from`
    
-Section **strings.el**  
+File **macros.el**  
+   - macro `aprogn`  
+   - macro `amapcar`  
+   - macro `let+`  
+   - macro `awhen`  
+   - macro `aif`
+   
+File **strings.el**  
    - function `my/string-remove-surrounding-quotes`  
    - function `my/string-suffix-p`  
    - function `my/split-string-at-first-delimiter`
    
-Section **trampoline.el**  
+File **trampoline.el**  
    - function `my/trampoline` with an example
    
 Any comment? Open an [issue](https://github.com/occisn/elisp-utils/issues), or start a discussion [here](https://github.com/occisn/elisp-utils/discussions) or [at profile level](https://github.com/occisn/occisn/discussions).
