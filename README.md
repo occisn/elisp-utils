@@ -37,11 +37,11 @@ File **integers-french.el**
    - function `my/en-toutes-lettres`
 
 File **integers-primes.el**  
-   - function `my/primep`  
-   - function `my/primep-_traditional`  
+   - functions `my/primep` and `my/primep-_traditional`  
    - function `my/largest-prime-factor--traditional`  
-   - function `my/eratosthenes-sieve`  
-   - function `my/eratosthenes-sieve--traditional`
+   - functions `my/eratosthenes-sieve` and `my/eratosthenes-sieve--traditional`  
+   - functions `my/next-prime` and `my/next-prime--traditional`  
+   - functions `my/nth-prime` and `my/nth-prime--traditional`
 
 File **files.el**  
    - function `my/insert-directories-in-file-list`  
